@@ -15,10 +15,10 @@ signals, fs = read_signal(file_path)
 print("Signal Shape:", signals.shape)  # (samples, channels)
 
 # Plot signals
-time = np.arange(signals.shape[0]) / fs  # Create time axis
+time = np.arange(signals.shape[0]) / fs  
 
 plt.figure(figsize=(12, 6))
-for i in range(signals.shape[1]):  # Iterate through all channels
+for i in range(signals.shape[1]): 
     plt.plot(time, signals[:, i], label=f"Channel {i+1}")
 
 plt.xlabel("Time (seconds)")
