@@ -2,6 +2,7 @@ import wfdb
 import numpy as np
 import pandas as pd
 import os
+import joblib
 from xgboost import XGBClassifier
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import f1_score, classification_report
@@ -11,7 +12,7 @@ from imblearn.over_sampling import SMOTE
 # Define file path
 path = r'C:\Users\DJOA0\OneDrive\Desktop\SpO2HR'
 
-# Load data from multiple subjects
+#80/20 split
 num_subjects = 20  
 train_subjects = 16  
 test_subjects = 4    
@@ -92,3 +93,5 @@ f1 = f1_score(y_test, y_pred, average='weighted')
 print(f"Improved F1 Score: {f1:.2f}")
 
 print(classification_report(y_test, y_pred))
+joblib.dump(best_model, "xgboost_stress_model.pkl")
+print("Model saved successfully!")
