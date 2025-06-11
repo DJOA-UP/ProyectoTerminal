@@ -1,0 +1,60 @@
+import numpy as np
+import pandas as pd
+import random
+
+def noisy_value(mean, std, min_val, max_val):
+    val = np.random.normal(mean, std)
+    return max(min(val, max_val), min_val)
+
+data_list = []
+samples_per_state = 1000
+random_samples = 2000
+
+# --- 1. Calm ---
+for _ in range(samples_per_state):
+    data_list.append({
+        'SpO2': noisy_value(97.5, 1.0, 95, 100),
+        'HR': noisy_value(75, 10, 60, 100),
+        'Temp': noisy_value(37.0, 0.3, 36.5, 37.5)
+    })
+
+# --- 2. Fatigue ---
+for _ in range(samples_per_state):
+    data_list.append({
+        'SpO2': noisy_value(94, 1.2, 92, 96),
+        'HR': noisy_value(50, 6, 40, 60),
+        'Temp': noisy_value(37.3, 0.25, 36.8, 37.8)
+    })
+
+# --- 3. Stress ---
+for _ in range(samples_per_state):
+    data_list.append({
+        'SpO2': noisy_value(92.5, 1.0, 90, 95),
+        'HR': noisy_value(110, 5, 100, 120),
+        'Temp': noisy_value(37.7, 0.2, 37.3, 38.0)
+    })
+
+# --- 4. Activity Needed ---
+for _ in range(samples_per_state):
+    data_list.append({
+        'SpO2': noisy_value(97, 0.8, 96, 98),
+        'HR': noisy_value(67, 4, 60, 75),
+        'Temp': noisy_value(36.7, 0.2, 36.5, 37.0)
+    })
+
+# --- 5. Random/Unstructured Set ---
+for _ in range(random_samples):
+    data_list.append({
+        'SpO2': random.uniform(90, 100),
+        'HR': random.randint(40, 120),
+        'Temp': random.uniform(36.5, 38.0)
+    })
+
+# Shuffle all data
+random.shuffle(data_list)
+
+# Create DataFrame and save
+df = pd.DataFrame(data_list)
+df.to_csv("synthetic_data.csv", index=False)
+
+
